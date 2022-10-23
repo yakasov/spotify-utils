@@ -1,27 +1,27 @@
 {
-    "name": "spotify-utils-requirements",
-    "version": "1.0.0",
-    "author": "yakasov",
-    "scripts": {
-        "build": "webpack --config webpack.config.js",
-        "dev": "webpack-dev-server --inline --hot"
-    },
-    "repository": {
-		"type": "git",
-		"url": ""
-	},
-    "devDependencies": {
-        "webpack": "2.3.3",
-		"webpack-bundle-analyzer": "3.6.0",
-		"webpack-dev-server": "1.16.3"
-    },
-    "dependencies": {
-        "crypto": "^1.0.1",
-        "request": "^2.88.2"
-    },
-    "browser": {
-        "fs": false,
-        "net": false,
-        "tls": false
-      }
+   "name":"spotify-utils-requirements",
+   "version":"1.0.0",
+   "author":"yakasov",
+   "scripts":{
+      "build":"webpack --config webpack.config.js",
+      "dev":"webpack-dev-server --inline --hot"
+   },
+   "repository":{
+      "type":"git",
+      "url":""
+   },
+   "devDependencies":{
+      "webpack":"2.3.3",
+      "webpack-bundle-analyzer":"3.6.0",
+      "webpack-dev-server":"1.16.3"
+   },
+   "dependencies":{
+      "crypto":"^1.0.1",
+      "request":"^2.88.2"
+   },
+   "browser":{
+      "fs":false,
+      "net":false,
+      "tls":false
+   }
 }
