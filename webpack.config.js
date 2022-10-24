@@ -4,8 +4,7 @@ module.exports = {
   entry: './src/index.js',
   output: {
     filename: 'main.js',
-    library: 'login',
-    libraryTarget: 'var',
+    library: 'UtilLibrary',
     path: path.resolve(__dirname, 'dist'),
   },
   node: {

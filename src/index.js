@@ -1,31 +1,33 @@
 import crypto from "crypto";
-import request from "request";
 const query_params = {
     client_id: "c6a397d8515d4f3bb31b88c6a97646e8",
-    redirect_uri: "http://127.0.0.1:5500/index.html",
+    redirect_uri: window.location.origin,
     scope: "user-read-email user-read-private user-library-read user-library-modify playlist-modify-public",
-    response_type: "code",
- }
- const auth_url = "https://accounts.spotify.com/authorize?"
- let auth_token = null;
+    response_type: "token",
+};
+const auth_url = "https://accounts.spotify.com/authorize";
+let auth_token = null;
 
- function login() {
-    console.log("qwewqeqe");
-    function getLoginURL() {
-        return auth_url + "client_id=" + query_params.client_id +
-        "&redirect_uri=" + query_params.redirect_uri +
-        "&scope=" + query_params.scope + 
-        "&response_type=" + query_params.response_type +
-        "&state=" + createState(8);
-    }
-
+export function login() {
+    function getLoginUrl() {
+        return "client_id=" + encodeURIComponent(query_params.client_id) +
+            "&redirect_uri=" + encodeURIComponent(query_params.redirect_uri) +
+            "&scope=" + encodeURIComponent(query_params.scope) +
+            "&response_type=" + encodeURIComponent(query_params.response_type) +
+            "&state=" + encodeURIComponent(createState(8));
+    };
     if (!auth_token) {
-        auth_token = request.post(getLoginURL());
-    }
- }
+        let xhttp = new XMLHttpRequest();
+        let response = "";
+        xhttp.open("POST", auth_url, true);
+        xhttp.onload = () => {
+            console.log(response);
+        };
+        xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
+        response = xhttp.send(getLoginUrl());
+    };
+};
 
- function createState(len) {
+function createState(len) {
     return crypto.randomBytes(len).toString("hex");
- }
-
- window.login = login;
+};

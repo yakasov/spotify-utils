@@ -4,7 +4,7 @@
     "author": "yakasov",
     "scripts": {
         "build": "webpack --config webpack.config.js",
-        "dev": "webpack-dev-server --inline --hot"
+        "dev": "webpack --config webpack.config.js && webpack-dev-server --inline --hot"
     },
     "repository": {
 		"type": "git",
@@ -16,8 +16,7 @@
 		"webpack-dev-server": "1.16.3"
     },
     "dependencies": {
-        "crypto": "^1.0.1",
-        "request": "^2.88.2"
+        "crypto": "^1.0.1"
     },
     "browser": {
         "fs": false,
