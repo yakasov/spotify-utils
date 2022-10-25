@@ -12,7 +12,9 @@
     <script type="text/javascript" src="main.js"></script>
     <script>
         window.onload = function() {
-            UtilLibrary.getTokenFromUrl();
+            if (window.location.hash.substring(1, 13) == "access_token") {
+                UtilLibrary.getPlaylists();
+            }
         }
     </script>
     <style>

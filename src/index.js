@@ -6,8 +6,14 @@ const query_params = {
     response_type: "token",
 };
 const auth_url = "https://accounts.spotify.com/authorize?";
-const token_url = "https://accounts.spotify.com/api/token";
-let auth_token = null;
+let auth_token;
+const me_url = "https://api.spotify.com/v1/me"
+let me_profile;
+
+export function debugFunction() {
+    console.log(auth_token);
+    console.log(me_profile);
+}
 
 export async function login() {
     function getLoginUrl() {
@@ -15,7 +21,7 @@ export async function login() {
             "&client_id=" + encodeURIComponent(query_params.client_id) +
             "&scope=" + encodeURIComponent(query_params.scope) +
             "&redirect_uri=" + encodeURIComponent(query_params.redirect_uri) +
-            "&state=" + encodeURIComponent(createState(8) + 
+            "&state=" + encodeURIComponent(createState(8) +
             "&show_dialog=true");
     };
 
@@ -26,9 +32,25 @@ function createState(len) {
     return crypto.randomBytes(len).toString("hex");
 };
 
-export function getTokenFromUrl() {
-    if (window.location.hash.substring(1, 13) == "access_token") {
-        auth_token = window.location.hash.substring(14).split("&")[0] // lol
-    }
-    console.log(auth_token);
-}
+export async function getPlaylists() {
+    auth_token = window.location.hash.substring(14).split("&")[0];
+    me_profile = await getRequest(me_url);
+};
+
+async function getRequest(url) {
+    let xhttp = new XMLHttpRequest();
+
+    return new Promise(resolve => {
+        let response;
+        xhttp.onreadystatechange = () => {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                resolve(xhttp.responseText);
+            }
+        }
+        xhttp.open("GET", url);
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.setRequestHeader("Authorization", "Bearer " + auth_token);
+        xhttp.send();
+    })
+};
