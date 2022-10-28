@@ -1,53 +1,115 @@
 <!DOCTYPE html>
 <html lang="en-us">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-    
-    <title>
-        Spotify Utilities  
-    </title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1"
+    />
+
+    <title>Spotify Utilities</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"
+    ></script>
     <script type="text/javascript" src="main.js"></script>
     <script>
-        window.onload = function() {
-            if (window.location.hash.substring(1, 13) == "access_token") {
-                UtilLibrary.getPlaylists();
-            }
+      window.onload = async function () {
+        let ul_left = document.getElementById("playlists-left-ul");
+        let ul_right = document.getElementById("playlists-right-ul");
+        let playlists;
+        if (window.location.hash.substring(1, 13) == "access_token") {
+          playlists = await UtilLibrary.getPlaylists();
         }
+        if (playlists) {
+          playlists.items.forEach((item) => {
+            [ul_left, ul_right].forEach((ul) => {
+              let li = document.createElement("li");
+              ul.appendChild(li);
+              li.innerHTML += item.name;
+            });
+          });
+          const arrow_alignment =
+            "<p>" +
+            "<br>".repeat(Math.round(playlists.items.length) / 2) +
+            "=></p>";
+          console.log(arrow_alignment);
+          document.getElementById("login-button-div").innerHTML =
+            arrow_alignment;
+          document.getElementById("title").remove();
+        }
+      };
     </script>
     <style>
-        html {
-            display: table;
-            margin: auto;
-        }
+      html {
+        display: table;
+        margin: auto;
+      }
 
-        .center-page {
-            height: 100;
-            display: table;
-            margin: auto;
-            margin-top: 50%;
-            vertical-align: middle;
-        }
+      .center-page {
+        height: 100;
+        display: table;
+        margin: auto;
+        margin-top: 25%;
+        vertical-align: middle;
+      }
 
+      .center {
+        margin-left: 25%;
+        margin-right: 25%;
+      }
 
-        .center {
-            display: table;
-            margin: auto;
-            vertical-align: middle;
-        }
+      .login-button {
+        display: table-cell;
+        /* margin-left: 50%;
+        margin-right: 50%; */
+      }
 
-        .spotify-green {
-            color: #191414;
-            background-color: #1DB954;
-        }
+      .playlists-left {
+        display: table-cell;
+        /* margin-left: 0;
+        margin-right: auto; */
+      }
+
+      .playlists-right {
+        display: table-cell;
+        /* margin-left: auto;
+        margin-right: 0; */
+      }
+
+      .spotify-green {
+        color: #191414;
+        background-color: #1db954;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <h1>Login to Spotify</h1>
+  <body>
+    <h1 id="title">Login to Spotify</h1>
     <div class="center-page">
-        <button onclick="UtilLibrary.login()" type="button" class="btn btn-primary btn-lg spotify-green">Login</button>
+      <div class="playlists-left">
+        <ul id="playlists-left-ul"></ul>
+      </div>
+      <div class="login-button" id="login-button-div">
+        <button
+          onclick="UtilLibrary.login()"
+          type="button"
+          class="btn btn-primary btn-lg spotify-green"
+          id="login-button"
+        >
+          Login
+        </button>
+      </div>
+      <div class="playlists-right">
+        <ul id="playlists-right-ul"></ul>
+      </div>
     </div>
-</body>
+  </body>
+</html>

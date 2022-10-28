@@ -43934,7 +43934,7 @@ module.exports = {
 /* 154 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"elliptic","version":"6.5.4","description":"EC cryptography","main":"lib/elliptic.js","files":["lib"],"scripts":{"lint":"eslint lib test","lint:fix":"npm run lint -- --fix","unit":"istanbul test _mocha --reporter=spec test/index.js","test":"npm run lint && npm run unit","version":"grunt dist && git add dist/"},"repository":{"type":"git","url":"git@github.com:indutny/elliptic"},"keywords":["EC","Elliptic","curve","Cryptography"],"author":"Fedor Indutny <fedor@indutny.com>","license":"MIT","bugs":{"url":"https://github.com/indutny/elliptic/issues"},"homepage":"https://github.com/indutny/elliptic","devDependencies":{"brfs":"^2.0.2","coveralls":"^3.1.0","eslint":"^7.6.0","grunt":"^1.2.1","grunt-browserify":"^5.3.0","grunt-cli":"^1.3.2","grunt-contrib-connect":"^3.0.0","grunt-contrib-copy":"^1.0.0","grunt-contrib-uglify":"^5.0.0","grunt-mocha-istanbul":"^5.0.2","grunt-saucelabs":"^9.0.1","istanbul":"^0.4.5","mocha":"^8.0.1"},"dependencies":{"bn.js":"^4.11.9","brorand":"^1.1.0","hash.js":"^1.0.0","hmac-drbg":"^1.0.1","inherits":"^2.0.4","minimalistic-assert":"^1.0.1","minimalistic-crypto-utils":"^1.0.1"}}
+module.exports = {"_args":[["elliptic@6.5.4","C:\\dev-personal\\spotify-utils"]],"_development":true,"_from":"elliptic@6.5.4","_id":"elliptic@6.5.4","_inBundle":false,"_integrity":"sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ==","_location":"/elliptic","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"elliptic@6.5.4","name":"elliptic","escapedName":"elliptic","rawSpec":"6.5.4","saveSpec":null,"fetchSpec":"6.5.4"},"_requiredBy":["/browserify-sign","/create-ecdh"],"_resolved":"https://registry.npmjs.org/elliptic/-/elliptic-6.5.4.tgz","_spec":"6.5.4","_where":"C:\\dev-personal\\spotify-utils","author":{"name":"Fedor Indutny","email":"fedor@indutny.com"},"bugs":{"url":"https://github.com/indutny/elliptic/issues"},"dependencies":{"bn.js":"^4.11.9","brorand":"^1.1.0","hash.js":"^1.0.0","hmac-drbg":"^1.0.1","inherits":"^2.0.4","minimalistic-assert":"^1.0.1","minimalistic-crypto-utils":"^1.0.1"},"description":"EC cryptography","devDependencies":{"brfs":"^2.0.2","coveralls":"^3.1.0","eslint":"^7.6.0","grunt":"^1.2.1","grunt-browserify":"^5.3.0","grunt-cli":"^1.3.2","grunt-contrib-connect":"^3.0.0","grunt-contrib-copy":"^1.0.0","grunt-contrib-uglify":"^5.0.0","grunt-mocha-istanbul":"^5.0.2","grunt-saucelabs":"^9.0.1","istanbul":"^0.4.5","mocha":"^8.0.1"},"files":["lib"],"homepage":"https://github.com/indutny/elliptic","keywords":["EC","Elliptic","curve","Cryptography"],"license":"MIT","main":"lib/elliptic.js","name":"elliptic","repository":{"type":"git","url":"git+ssh://git@github.com/indutny/elliptic.git"},"scripts":{"lint":"eslint lib test","lint:fix":"npm run lint -- --fix","test":"npm run lint && npm run unit","unit":"istanbul test _mocha --reporter=spec test/index.js","version":"grunt dist && git add dist/"},"version":"6.5.4"}
 
 /***/ }),
 /* 155 */
@@ -50215,61 +50215,69 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (immutable) */ __webpack_exports__["getPlaylists"] = getPlaylists;
 
 const query_params = {
-    client_id: "c6a397d8515d4f3bb31b88c6a97646e8",
-    redirect_uri: "http://localhost:8080/dist/index.html",
-    scope: "user-read-email user-read-private user-library-read user-library-modify playlist-modify-public",
-    response_type: "token",
+  client_id: "c6a397d8515d4f3bb31b88c6a97646e8",
+  redirect_uri: "http://localhost:8080/dist/index.html",
+  scope:
+    "user-read-email user-read-private user-library-read user-library-modify playlist-modify-public",
+  response_type: "token",
 };
 const auth_url = "https://accounts.spotify.com/authorize?";
+const api_url = "https://api.spotify.com/v1/";
 let auth_token;
-const me_url = "https://api.spotify.com/v1/me"
 let me_profile;
+let playlists;
 
 function debugFunction() {
-    console.log(auth_token);
-    console.log(me_profile);
+  return [auth_token, me_profile, playlists];
 }
 
 async function login() {
-    function getLoginUrl() {
-        return "response_type=" + encodeURIComponent(query_params.response_type) +
-            "&client_id=" + encodeURIComponent(query_params.client_id) +
-            "&scope=" + encodeURIComponent(query_params.scope) +
-            "&redirect_uri=" + encodeURIComponent(query_params.redirect_uri) +
-            "&state=" + encodeURIComponent(createState(8) +
-            "&show_dialog=true");
-    };
+  function getLoginUrl() {
+    return (
+      "response_type=" +
+      encodeURIComponent(query_params.response_type) +
+      "&client_id=" +
+      encodeURIComponent(query_params.client_id) +
+      "&scope=" +
+      encodeURIComponent(query_params.scope) +
+      "&redirect_uri=" +
+      encodeURIComponent(query_params.redirect_uri) +
+      "&state=" +
+      encodeURIComponent(createState(8) + "&show_dialog=true")
+    );
+  }
 
-    window.location = auth_url + getLoginUrl();
-};
+  window.location = auth_url + getLoginUrl();
+}
 
 function createState(len) {
-    return __WEBPACK_IMPORTED_MODULE_0_crypto___default.a.randomBytes(len).toString("hex");
-};
+  return __WEBPACK_IMPORTED_MODULE_0_crypto___default.a.randomBytes(len).toString("hex");
+}
 
 async function getPlaylists() {
-    auth_token = window.location.hash.substring(14).split("&")[0];
-    me_profile = await getRequest(me_url);
-};
+  auth_token = window.location.hash.substring(14).split("&")[0];
+  me_profile = await getRequest(api_url + "me");
+  playlists = await getRequest(api_url + `users/${me_profile.id}/playlists`);
+  return playlists;
+}
 
 async function getRequest(url) {
-    let xhttp = new XMLHttpRequest();
+  let xhttp = new XMLHttpRequest();
 
-    return new Promise(resolve => {
-        let response;
-        xhttp.onreadystatechange = () => {
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
-                console.log(xhttp.responseText);
-                resolve(xhttp.responseText);
-            }
-        }
-        xhttp.open("GET", url);
-        xhttp.setRequestHeader("Accept", "application/json");
-        xhttp.setRequestHeader("Content-Type", "application/json");
-        xhttp.setRequestHeader("Authorization", "Bearer " + auth_token);
-        xhttp.send();
-    })
-};
+  return new Promise((resolve) => {
+    xhttp.onreadystatechange = () => {
+      if (xhttp.readyState == 4 && xhttp.status == 200) {
+        resolve(JSON.parse(xhttp.responseText));
+      }
+    };
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.setRequestHeader("Authorization", "Bearer " + auth_token);
+    xhttp.send();
+  });
+}
+
 
 /***/ }),
 /* 193 */
