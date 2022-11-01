@@ -62,3 +62,7 @@ async function getRequest(url) {
     xhttp.send();
   });
 }
+
+export function mergePlaylists() {
+  console.log("1234");
+}

@@ -50213,6 +50213,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (immutable) */ __webpack_exports__["debugFunction"] = debugFunction;
 /* harmony export (immutable) */ __webpack_exports__["login"] = login;
 /* harmony export (immutable) */ __webpack_exports__["getPlaylists"] = getPlaylists;
+/* harmony export (immutable) */ __webpack_exports__["mergePlaylists"] = mergePlaylists;
 
 const query_params = {
   client_id: "c6a397d8515d4f3bb31b88c6a97646e8",
@@ -50276,6 +50277,10 @@ async function getRequest(url) {
     xhttp.setRequestHeader("Authorization", "Bearer " + auth_token);
     xhttp.send();
   });
+}
+
+function mergePlaylists() {
+  console.log("1234");
 }
 
 
