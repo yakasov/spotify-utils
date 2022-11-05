@@ -97,12 +97,13 @@
       <button
         onclick="
         let warningText = document.getElementById('warning-text')
+        let fromPlaylistVal = document.getElementById('playlists-left-select').value
+        let toPlaylistVal = document.getElementById('playlists-right-select').value
         if (
-          document.getElementById('playlists-left-select').value != 
-          document.getElementById('playlists-right-select').value
+          fromPlaylistVal != toPlaylistVal
         ) {
-          warningText.innerHTML = '';
-          UtilLibrary.mergePlaylists()
+          warningText.innerHTML = ''
+          UtilLibrary.mergePlaylists(fromPlaylistVal, toPlaylistVal, warningText)
         } else {
           warningText.innerHTML = 'Playlists cannot be the same!'
         };"
